@@ -1,5 +1,5 @@
-#ifndef SIMPLICIAL_COMPLEX_H
-#define SIMPLICIAL_COMPLEX_H
+#ifndef FILTERED_COMPLEX_H
+#define FILTERED_COMPLEX_H
 
 #include <vector>
 #include <set>

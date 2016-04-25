@@ -3,8 +3,6 @@
 #include "homology.h"
 #include "globals.h"
 
-using namespace std;
-
 filtered_simplex::filtered_simplex() {}
 
 filtered_simplex::filtered_simplex(real c, const simplex* s) {
@@ -13,7 +11,7 @@ filtered_simplex::filtered_simplex(real c, const simplex* s) {
 }
 
 bool filtered_simplex::operator< (const filtered_simplex& f) const {
-  if(abs(crit - f.crit) < EPS)
+  if(std::abs(crit - f.crit) < EPS)
     return *spx < *f.spx;
   return crit < f.crit;
 }
@@ -27,7 +25,7 @@ std::vector<pdd>* barcode(filtered_complex* fc) {
       order[sz++] = filtered_simplex(fc->critical_value[i][j->id], &(*j));
   simplex* nl = new simplex(-1,&sz,0);
   order[sz++] = filtered_simplex(0,nl);
-  sort(order,order+sz);
+  std::sort(order,order+sz);
 
   int** remap = new int*[fc->grade.size()];
   for(int i = 0; i < fc->grade.size(); ++i)
@@ -35,7 +33,7 @@ std::vector<pdd>* barcode(filtered_complex* fc) {
   for(int i = 1; i < sz; ++i)
     remap[order[i].spx->dim][order[i].spx->id] = i;
 
-  std::vector<int>* R = new vector<int>[fc->size+1];
+  std::vector<int>* R = new std::vector<int>[fc->size+1];
   std::vector<int> v;
   for(int i = 1; i < sz; ++i) {
     v.clear();
@@ -56,6 +54,6 @@ std::vector<pdd>* barcode(filtered_complex* fc) {
   delete[] remap;
   delete[] order;
   delete[] R;
-  vector<pdd>* ans = new vector<pdd>();
+  std::vector<pdd>* ans = new std::vector<pdd>();
   return ans;
 }

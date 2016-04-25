@@ -1,6 +1,5 @@
 #include <random>
-#include "../globals.h"
-#include "../complex/filtered_complex.h"
+#include "witness_complex.h"
 
 // euclidean distance
 real dist(real* a, real* b, int dim) {

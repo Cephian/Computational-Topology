@@ -2,7 +2,6 @@
 #define HOMOLOGY_H
 
 #include "complex/filtered_complex.cpp"
-
 typedef std::pair<double,double> pdd;
 
 struct filtered_simplex {
