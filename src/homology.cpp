@@ -16,7 +16,6 @@ bool filtered_simplex::operator< (const filtered_simplex& f) const {
   return crit < f.crit;
 }
 
-//calculate barcode of a filtered complex
 std::vector<pdd>* barcode(filtered_complex* fc) {
   filtered_simplex* order = new filtered_simplex[fc->size+1];
   int sz = 0;

@@ -1,7 +1,9 @@
 #ifndef HOMOLOGY_H
 #define HOMOLOGY_H
 
-#include "complex/filtered_complex.cpp"
+#include "globals.h"
+#include "complex/filtered_complex.h"
+
 typedef std::pair<double,double> pdd;
 
 struct filtered_simplex {
@@ -13,6 +15,7 @@ struct filtered_simplex {
   bool operator< (const filtered_simplex& f) const;
 };
 
+//calculate barcode of a filtered complex
 std::vector<pdd>* barcode(filtered_complex* fc);
 
 #endif

@@ -1,8 +1,8 @@
 #include <iostream>
-// #include "construction/witness_complex.h"
-// #include "homology.h"
+#include "construction/witness_complex.h"
+#include "homology.h"
 #include "globals.h"
-// #include "complex/filtered_complex.h"
+#include "complex/filtered_complex.h"
 
 int main () {
   int N, dim;
@@ -13,7 +13,7 @@ int main () {
     for(int j = 0; j < dim; ++j)
       std::cin >> data[i][j];
   }
-  // filtered_complex* fc = create_random_witness_complex(2,N,dim,4,12,data,5000,5671);
-  // fc->print();
-  // barcode(fc);
+  filtered_complex* fc = create_random_witness_complex(2,N,dim,4,12,data,5000,5671);
+  fc->print();
+  barcode(fc);
 }

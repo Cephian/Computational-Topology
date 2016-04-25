@@ -1,5 +1,5 @@
 
-obj = build/tests.o build/homology.o build/filtered_complex.o build/simplex.o build/witness_complex.o
+obj = build/tests.o build/filtered_complex.o build/simplex.o build/witness_complex.o build/homology.o
 
 all: $(obj)
 	g++ $(obj) -o run
