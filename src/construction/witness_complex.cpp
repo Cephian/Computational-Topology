@@ -1,9 +1,13 @@
 #include <random>
+#include <iostream>
 #include "witness_complex.h"
+
+real dist(real* a, real* b, int dim);
+void fill_simplices(filtered_complex* fc, int* chosen, int& tgt_dim, int cur_dim, int i, double& cutoff);
 
 // euclidean distance
 real dist(real* a, real* b, int dim) {
-  double dot = 0;
+  real dot = 0;
   for(int i = 0; i < dim; ++i)
     dot += (a[i]-b[i])*(a[i]-b[i]);
   return sqrt(dot);
@@ -33,6 +37,8 @@ void fill_simplices(filtered_complex* fc, int* chosen, int& tgt_dim, int cur_dim
  * landmarks -> the indices of the landmark set
  */
 filtered_complex* create_witness_complex(int v, int N, int dim, int cpx_dim, int n, real** data, real cutoff, int* landmarks) {
+  if(cpx_dim > dim)
+  cpx_dim = dim;
   real** D = new real*[n];
   real* m = new real[N];
   for(int i = 0; i < n; ++i) {
@@ -99,6 +105,7 @@ filtered_complex* create_witness_complex(int v, int N, int dim, int cpx_dim, int
 // construct a witness complex with random landmarks
 // all arguments are as detailed in the create_witness_complex method
 filtered_complex* create_random_witness_complex(int v, int N, int dim, int cpx_dim, int n, real** data, real cutoff, int seed) {
+  if(n > N) n = N;
   int* arr = new int[N];
   int* landmarks = new int[n];
   for(int i = 0; i < N; ++i)
@@ -113,6 +120,35 @@ filtered_complex* create_random_witness_complex(int v, int N, int dim, int cpx_d
     landmarks[i] = arr[i];
   }
   delete[] arr;
+  filtered_complex* fc = create_witness_complex(v,N,dim,cpx_dim,n,data,cutoff,landmarks);
+  delete[] landmarks;
+  return fc;
+}
+
+
+filtered_complex* create_maxmin_witness_complex(int v, int N, int dim, int cpx_dim, int n, real** data, real cutoff, int seed) {
+  if(N < n) n = N;
+  int* landmarks = new int[n];
+  srand(seed);
+  landmarks[0] = rand()%n;
+  for(int i = 1; i < n; ++i) {
+    int best = -1;
+    real best_dist = -1;
+    for(int j = 0; j < N; ++j) {
+      real mnd = INF;
+      for(int k = 0; k < i; ++k) {
+        if(j == landmarks[k]) goto skp;
+        real ds = dist(data[landmarks[k]],data[j],dim);
+        if(ds < mnd) mnd = ds;
+      }
+      if(mnd > best_dist) {
+        best_dist = mnd;
+        best = j;
+      }
+      skp:;
+    }
+    landmarks[i]=best;
+  }
   filtered_complex* fc = create_witness_complex(v,N,dim,cpx_dim,n,data,cutoff,landmarks);
   delete[] landmarks;
   return fc;

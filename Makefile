@@ -1,11 +1,13 @@
 
-obj = build/tests.o build/filtered_complex.o build/simplex.o build/witness_complex.o build/homology.o
+obj = build/run.o build/filtered_complex.o build/simplex.o build/witness_complex.o build/homology.o
 
-all: $(obj)
+all: run
+
+run: $(obj)
 	g++ $(obj) -o run
 
-build/tests.o:
-	g++ -c src/tests.cpp -o build/tests.o
+build/run.o: src/run.cpp
+	g++ -c src/run.cpp -o build/run.o
 
 build/homology.o: src/homology.cpp
 	g++ -c src/homology.cpp -o build/homology.o
