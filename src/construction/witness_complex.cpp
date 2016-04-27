@@ -39,6 +39,7 @@ void fill_simplices(filtered_complex* fc, int* chosen, int& tgt_dim, int cur_dim
 filtered_complex* create_witness_complex(int v, int N, int dim, int cpx_dim, int n, real** data, real cutoff, int* landmarks) {
   if(cpx_dim > dim)
   cpx_dim = dim;
+  // cout << "of dimension " << cpx_dim << endl;
   real** D = new real*[n];
   real* m = new real[N];
   for(int i = 0; i < n; ++i) {
